@@ -26,12 +26,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         },
         events: [
           new Event(
-              color: Colors.red,
-              initialDate: DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day, 10, 05),
-              finalDate: DateTime(DateTime.now().year, DateTime.now().month,
-                  DateTime.now().day, 11, 05),
-              title: "Reunião"),
+            color: Colors.transparent,
+            borderColor: Colors.black,
+            initialDate: DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, 10, 05),
+            finalDate: DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, 11, 05),
+            title: "Reunião",
+            eventTitleStyle: TextStyle(color: Colors.red),
+          ),
           new Event(
               color: Colors.blueGrey,
               initialDate: DateTime(DateTime.now().year, DateTime.now().month,

@@ -25,9 +25,6 @@ class DayCalendarFlutter extends StatefulWidget {
   ///Color of day in header
   final Color colorOfHeader;
 
-  ///Style for title of event
-  final TextStyle eventTitleStyle;
-
   ///Function for get event data
   final OnEventTap onEventTap;
 
@@ -46,7 +43,6 @@ class DayCalendarFlutter extends StatefulWidget {
     this.initialHour,
     this.currentDate,
     this.onTap,
-    this.eventTitleStyle,
     this.colorOfHeader,
     this.onEventTap,
     this.colorTimeLine,
@@ -254,11 +250,11 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
           _generatePositionCard(ev.initialDate),
       child: Text(
         "${ev.title} ${DateFormat('HH:mm').format(ev.initialDate)} - ${DateFormat('HH:mm').format(ev.finalDate)}",
-        style: widget.eventTitleStyle == null
+        style: ev.eventTitleStyle == null
             ? TextStyle(
                 color: Colors.white,
               )
-            : widget.eventTitleStyle,
+            : ev.eventTitleStyle,
       ),
     );
   }
@@ -299,10 +295,12 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              controller.setDateSelected(date: hour['date']);
-                              if (widget.onTap != null) {
-                                widget.onTap(hour['date']);
-                              }
+                              setState(() {
+                                controller.setDateSelected(date: hour['date']);
+                                if (widget.onTap != null) {
+                                  widget.onTap(hour['date']);
+                                }
+                              });
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 20.0),
