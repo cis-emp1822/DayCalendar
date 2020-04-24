@@ -18,7 +18,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  day_calendar_flutter: ^1.0.2
+  day_calendar_flutter: ^1.0.3
 
 flutter_localizations:
   sdk: flutter

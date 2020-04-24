@@ -18,7 +18,7 @@ environment:
   sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
-  day_calendar_flutter: ^1.0.2
+  day_calendar_flutter: ^1.0.3
   intl: ^0.16.1
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2+2
