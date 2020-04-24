@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class Event {
-  final DateTime initialDate;
-  final DateTime finalDate;
-  final Color color;
-  final String title;
-  final int id;
-  final Color borderColor;
-  final TextStyle eventTitleStyle;
-  final bool showHours;
+  DateTime initialDate;
+  DateTime finalDate;
+  Color color;
+  String title;
+  int id;
+  Color borderColor;
+  TextStyle eventTitleStyle;
+  bool showHours;
 
   Event({
     this.initialDate,

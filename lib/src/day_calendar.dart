@@ -37,6 +37,9 @@ class DayCalendarFlutter extends StatefulWidget {
   ///event for change date
   final OnDateChange onDateChange;
 
+  ///bolean for show header or no
+  bool showHeader = true;
+
   DayCalendarFlutter({
     Key key,
     this.finalHour,
@@ -48,6 +51,7 @@ class DayCalendarFlutter extends StatefulWidget {
     this.colorTimeLine,
     this.selectedColor,
     this.onDateChange,
+    this.showHeader,
     @required this.events,
   }) : super(key: key);
   @override
@@ -68,52 +72,57 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
       currentDate: widget.currentDate,
     );
     pageController = PageController(initialPage: widget.currentDate.day);
+    widget.events = controller.validateEventsDate(widget.events);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Card(
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 5),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: widget.currentDate.day != DateTime.now().day
-                              ? Colors.grey[400]
-                              : widget.colorOfHeader == null
-                                  ? Colors.blueAccent
-                                  : widget.colorOfHeader,
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Text(
-                        DateFormat('dd').format(widget.currentDate),
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      DateFormat('EE', 'pt-br').format(widget.currentDate),
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+        widget.showHeader
+            ? Card(
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color:
+                                    widget.currentDate.day != DateTime.now().day
+                                        ? Colors.grey[400]
+                                        : widget.colorOfHeader == null
+                                            ? Colors.blueAccent
+                                            : widget.colorOfHeader,
+                                borderRadius: BorderRadius.circular(50)),
+                            child: Text(
+                              DateFormat('dd').format(widget.currentDate),
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            DateFormat('EE', 'pt-br')
+                                .format(widget.currentDate),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
+            : SizedBox.shrink(),
         Expanded(
           child: PageView.builder(
             itemCount: DateUtil()

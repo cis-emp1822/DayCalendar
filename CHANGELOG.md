@@ -9,3 +9,8 @@
 ## [1.0.3] - Add release date.
 
 * Changed Readme.md.
+  
+## [1.0.4] - Add release date.
+
+* Bug fix
+* add showHeader parameter

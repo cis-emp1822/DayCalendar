@@ -85,4 +85,17 @@ abstract class _DayCalendarControllerBase with Store {
 
     listHour[index]['selected'] = true;
   }
+
+  List<Event> validateEventsDate(List<Event> events) {
+    List<Event> list = [];
+    events.forEach((f) {
+      f.initialDate = DateTime(f.initialDate.year, f.initialDate.month,
+          f.initialDate.day, f.initialDate.hour, f.initialDate.minute);
+      f.finalDate = DateTime(f.finalDate.year, f.finalDate.month,
+          f.finalDate.day, f.finalDate.hour, f.finalDate.minute);
+      list.add(f);
+    });
+
+    return list;
+  }
 }
