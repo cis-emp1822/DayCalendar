@@ -82,7 +82,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        widget.showHeader
+        widget.showHeader != null && widget.showHeader
             ? widget.customHeader == null
                 ? Card(
                     elevation: 5,
