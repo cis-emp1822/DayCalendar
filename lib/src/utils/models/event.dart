@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:day_calendar_flutter/src/utils/typedefs.dart';
 import 'package:flutter/material.dart';
 
 class Event {
@@ -11,17 +12,18 @@ class Event {
   Color borderColor;
   TextStyle eventTitleStyle;
   bool showHours;
+  final OnEventTap onEventTap;
 
-  Event({
-    this.initialDate,
-    this.finalDate,
-    this.color,
-    this.title,
-    this.id,
-    this.borderColor,
-    this.eventTitleStyle,
-    this.showHours,
-  });
+  Event(
+      {this.initialDate,
+      this.finalDate,
+      this.color,
+      this.title,
+      this.id,
+      this.borderColor,
+      this.eventTitleStyle,
+      this.showHours,
+      @required this.onEventTap});
 
   factory Event.fromJson(String str) => Event.fromMap(json.decode(str));
 
@@ -38,6 +40,7 @@ class Event {
             ? TextStyle(color: Colors.white)
             : json['eventTitleStyle'],
         showHours: json['showHours'] == null ? null : json['showHours'],
+        onEventTap: json['eventTap'] == null ? null : json['eventTap'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -51,5 +54,6 @@ class Event {
             ? TextStyle(color: Colors.white)
             : eventTitleStyle,
         "showHours": showHours == null ? null : showHours,
+        "eventTap": onEventTap == null ? null : onEventTap,
       };
 }

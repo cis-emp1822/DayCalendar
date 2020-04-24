@@ -25,9 +25,6 @@ class DayCalendarFlutter extends StatefulWidget {
   ///Color of day in header
   final Color colorOfHeader;
 
-  ///Function for get event data
-  final OnEventTap onEventTap;
-
   ///color of selected hour/event
   final Color selectedColor;
 
@@ -49,7 +46,6 @@ class DayCalendarFlutter extends StatefulWidget {
     this.currentDate,
     this.onTap,
     this.colorOfHeader,
-    this.onEventTap,
     this.colorTimeLine,
     this.selectedColor,
     this.onDateChange,
@@ -226,8 +222,8 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
-                        if (widget.onEventTap != null) {
-                          widget.onEventTap(ev);
+                        if (ev.onEventTap != null) {
+                          ev.onEventTap(ev);
                         }
                       },
                       child: _cardEvent(

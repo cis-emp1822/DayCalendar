@@ -22,3 +22,7 @@
 ## [1.0.6] - Add release date.
 
 * Bug fix
+
+## [1.0.7] - Add release date.
+
+* add event Tap in Event class

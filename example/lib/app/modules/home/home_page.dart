@@ -22,9 +22,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       body: DayCalendarFlutter(
         currentDate: DateTime.now(),
         showHeader: false,
-        onEventTap: (ev) {
-          print(ev.title);
-        },
         events: [
           new Event(
             color: Colors.cyan,
@@ -36,6 +33,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               fontWeight: FontWeight.bold,
             ),
             showHours: true,
+            onEventTap: (event) {
+              
+            }
           ),
         ],
         onTap: (date) {

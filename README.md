@@ -53,22 +53,20 @@ import 'package:day_calendar_flutter/day_calendar_flutter.dart';
     return Scaffold(
       body: DayCalendarFlutter(
         currentDate: DateTime.now(),
-        onEventTap: (ev) {
-          print(ev.title);
-        },
         events: [
           new Event(
             color: Colors.cyan,
-            initialDate: DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, 10, 05),
-            finalDate: DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, 11, 05),
+            initialDate: DateTime.now(),
+            finalDate: DateTime.now().add(Duration(minutes: 30)),
             title: "Reunião",
             eventTitleStyle: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             showHours: true,
+            onEventTap: (ev) {
+              print(ev.title);
+            },
           ),
         ],
         onTap: (date) {
