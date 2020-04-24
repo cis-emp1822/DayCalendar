@@ -190,7 +190,9 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
           if (t.initialDate.isAfter(ev.initialDate) &&
                   t.initialDate.isBefore(ev.finalDate) ||
               ev.initialDate.isAfter(t.initialDate) &&
-                  ev.initialDate.isBefore(t.finalDate)) {
+                  ev.initialDate.isBefore(t.finalDate) ||
+              t.initialDate.difference(ev.initialDate).inMinutes == 0 ||
+              ev.initialDate.difference(t.initialDate).inMinutes == 0) {
             events.add(t);
           }
         });
