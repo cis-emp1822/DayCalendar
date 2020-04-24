@@ -1,6 +1,6 @@
 name: day_calendar_flutter
 description: Package of hours of day for flutter.
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/RodolfoBonis/DayCalendar
 
 environment:

@@ -14,3 +14,7 @@
 
 * Bug fix
 * add showHeader parameter
+
+## [1.0.5] - Add release date.
+
+* add parameter for custom header
