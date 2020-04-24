@@ -162,13 +162,13 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
   double _generatePositionCard(DateTime date) {
     var index = controller.listHour.indexWhere((t) => t['date'] == date);
 
-    return double.parse(((index * 1.62) + 1).toString());
+    return double.parse(((index * 1.61) + 1).toString());
   }
 
   double _generateHeightCard(DateTime date) {
     var index = controller.listHour.indexWhere((t) => t['date'] == date);
 
-    return double.parse(((index * 1.62) + 1).toString());
+    return double.parse(((index * 1.61) + 1).toString());
   }
 
   List<Widget> _buildCardEvents() {
@@ -181,6 +181,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
 
     events = [];
     for (var e = 0; e < widget.events.length; e++) {
+      events = [];
       Event ev = widget.events[e];
       if (ev.initialDate.day == widget.currentDate.day) {
         controller.listEv.removeWhere((t) => t == ev);
@@ -189,8 +190,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
           if (t.initialDate.isAfter(ev.initialDate) &&
                   t.initialDate.isBefore(ev.finalDate) ||
               ev.initialDate.isAfter(t.initialDate) &&
-                  ev.initialDate.isBefore(t.finalDate) ||
-              t.initialDate.difference(ev.initialDate).inMinutes == 0) {
+                  ev.initialDate.isBefore(t.finalDate)) {
             events.add(t);
           }
         });
@@ -249,7 +249,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
       height: _generateHeightCard(ev.finalDate) -
           _generatePositionCard(ev.initialDate),
       child: Text(
-        "${ev.title} ${DateFormat('HH:mm').format(ev.initialDate)} - ${DateFormat('HH:mm').format(ev.finalDate)}",
+        "${ev.title} ${showHours(ev)}",
         style: ev.eventTitleStyle == null
             ? TextStyle(
                 color: Colors.white,
@@ -257,6 +257,14 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
             : ev.eventTitleStyle,
       ),
     );
+  }
+
+  String showHours(Event ev) {
+    if (ev.showHours != null && ev.showHours) {
+      return '${DateFormat('HH:mm').format(ev.initialDate)} - ${DateFormat('HH:mm').format(ev.finalDate)}';
+    }
+
+    return '';
   }
 
   List<Widget> _buildListHours() {
