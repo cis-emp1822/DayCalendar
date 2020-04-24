@@ -1,4 +1,6 @@
-# Table Calendar
+# Day Calendar
+
+[![Pub Package](https://img.shields.io/pub/v/day_calendar_flutter.svg?style=flat-square)](https://pub.dartlang.org/packages/day_calendar_flutter)
 
 | ![github-small](assets/img/readme_1.png) | ![github-small](assets/img/readme_2.png) |
 | :------------: | :------------: |
@@ -16,7 +18,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  day_calendar_flutter: ^1.0.0
+  day_calendar_flutter: ^1.0.2
 
 flutter_localizations:
   sdk: flutter
