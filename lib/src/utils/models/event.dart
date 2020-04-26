@@ -27,6 +27,17 @@ class Event {
 
   factory Event.fromJson(String str) => Event.fromMap(json.decode(str));
 
+  bool get shouldDraw => initialDate != null && finalDate != null;
+
+  bool collidesWith(Event other) {
+    if (!shouldDraw || !other.shouldDraw) {
+      return false;
+    }
+
+    return finalDate.isAfter(other.initialDate) &&
+        initialDate.isBefore(other.finalDate);
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Event.fromMap(Map<String, dynamic> json) => Event(

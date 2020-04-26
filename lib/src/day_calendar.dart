@@ -37,6 +37,7 @@ class DayCalendarFlutter extends StatefulWidget {
   ///bolean for show header or no
   bool showHeader = true;
 
+  ///a custom header widget
   final Widget customHeader;
 
   DayCalendarFlutter({
@@ -76,177 +77,192 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        widget.showHeader != null && widget.showHeader
-            ? widget.customHeader == null
-                ? Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0, top: 5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: widget.currentDate.day !=
-                                            DateTime.now().day
-                                        ? Colors.grey[400]
-                                        : widget.colorOfHeader == null
-                                            ? Colors.blueAccent
-                                            : widget.colorOfHeader,
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Text(
-                                  DateFormat('dd').format(widget.currentDate),
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                DateFormat('EE', 'pt-br')
-                                    .format(widget.currentDate),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                : widget.customHeader
-            : SizedBox.shrink(),
-        Expanded(
-          child: PageView.builder(
-            itemCount: DateUtil()
-                .daysInMonth(widget.currentDate.month, widget.currentDate.year),
-            controller: pageController,
-            onPageChanged: (i) {
-              setState(() {
-                widget.currentDate = DateTime(
-                    widget.currentDate.year,
-                    widget.currentDate.month,
-                    i,
-                    widget.currentDate.hour,
-                    widget.currentDate.minute);
-              });
+    return Expanded(
+      child: PageView.builder(
+        itemCount: DateUtil()
+            .daysInMonth(widget.currentDate.month, widget.currentDate.year),
+        controller: pageController,
+        onPageChanged: (i) {
+          setState(() {
+            widget.currentDate = DateTime(
+                widget.currentDate.year,
+                widget.currentDate.month,
+                i,
+                widget.currentDate.hour,
+                widget.currentDate.minute);
+          });
 
-              if (widget.onDateChange != null) {
-                widget.onDateChange(widget.currentDate);
-              }
-            },
-            itemBuilder: (_, __) => Container(
-              child: Observer(builder: (_) {
-                return SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                    Stack(
+          if (widget.onDateChange != null) {
+            widget.onDateChange(widget.currentDate);
+          }
+        },
+        itemBuilder: (_, __) => Container(
+          child: Observer(builder: (_) {
+            return Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: widget.showHeader != null && widget.showHeader
+                        ? 100.0
+                        : 0.0,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: <Widget>[
-                        Column(
-                          children: _buildListHours(),
+                        Stack(
+                          children: <Widget>[
+                            Column(
+                              children: _buildListHours(),
+                            ),
+                            buildEvents(),
+                          ],
                         ),
-                        _buildCardEvents().length > 0
-                            ? Stack(
-                                children: _buildCardEvents(),
-                              )
-                            : SizedBox.shrink()
                       ],
-                    )
-                  ]),
-                );
-              }),
-            ),
-          ),
+                    ),
+                  ),
+                ),
+                widget.showHeader != null && widget.showHeader
+                    ? widget.customHeader == null
+                        ? buildHeader()
+                        : SizedBox.shrink()
+                    : SizedBox.shrink(),
+              ],
+            );
+          }),
         ),
-      ],
+      ),
     );
   }
 
+  buildHeader() {
+    return widget.showHeader != null && widget.showHeader
+        ? widget.customHeader == null
+            ? Container(
+                height: 80,
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: widget.currentDate.day !=
+                                          DateTime.now().day
+                                      ? Colors.grey[400]
+                                      : widget.colorOfHeader == null
+                                          ? Colors.blueAccent
+                                          : widget.colorOfHeader,
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Text(
+                                DateFormat('dd').format(widget.currentDate),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              DateFormat('EE', 'pt-br')
+                                  .format(widget.currentDate),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : widget.customHeader
+        : SizedBox.shrink();
+  }
+
   double _generatePositionCard(DateTime date) {
-    var index = controller.listHour.indexWhere((t) => t['date'] == date);
+    var index = controller.listHour.indexWhere(
+      (t) => t['date'].hour == date.hour && t['date'].minute == date.minute,
+    );
 
     return double.parse(((index * 1.61) + 1).toString());
   }
 
   double _generateHeightCard(DateTime date) {
-    var index = controller.listHour.indexWhere((t) => t['date'] == date);
+    var index = controller.listHour.indexWhere(
+      (t) => t['date'].hour == date.hour && t['date'].minute == date.minute,
+    );
 
     return double.parse(((index * 1.61) + 1).toString());
   }
 
-  List<Widget> _buildCardEvents() {
-    List<Widget> list = [];
-    List<Event> events = [];
-    widget.events.forEach((v) {
-      events.add(v);
-      controller.setListEv(events);
+  buildEvents() {
+    List<Widget> children = [];
+
+    widget.events.forEach((ev) {
+      if (ev.initialDate.month == widget.currentDate.month &&
+          ev.initialDate.day == widget.currentDate.day) {
+        children.add(createWidget(ev));
+      }
     });
 
-    events = [];
-    for (var e = 0; e < widget.events.length; e++) {
-      events = [];
-      Event ev = widget.events[e];
-      if (ev.initialDate.day == widget.currentDate.day) {
-        controller.listEv.removeWhere((t) => t == ev);
-
-        controller.listEv.forEach((t) {
-          if (t.initialDate.isAfter(ev.initialDate) &&
-                  t.initialDate.isBefore(ev.finalDate) ||
-              ev.initialDate.isAfter(t.initialDate) &&
-                  ev.initialDate.isBefore(t.finalDate) ||
-              t.initialDate.difference(ev.initialDate).inMinutes == 0 ||
-              ev.initialDate.difference(t.initialDate).inMinutes == 0) {
-            events.add(t);
-          }
-        });
-
-        list.add(
-          Stack(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  top: _generatePositionCard(ev.initialDate),
-                  left: 76,
-                ),
-                child: Row(
-                  mainAxisAlignment: events.indexOf(ev) != -1
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.start,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        if (ev.onEventTap != null) {
-                          ev.onEventTap(ev);
-                        }
-                      },
-                      child: _cardEvent(
-                        ev,
-                        width: events.length > 0
-                            ? MediaQuery.of(context).size.width * 0.4
-                            : MediaQuery.of(context).size.width * 0.804347,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    }
-    return list;
+    return SizedBox(
+      height: controller.listHour.length * 1.63,
+      child: Stack(
+        children: children,
+      ),
+    );
   }
+
+  Map calculateWidth(Event event, List<Event> eventos) {
+    List<Event> list = [];
+    double width = 1;
+    double left = 1;
+
+    eventos.forEach((ev) {
+      if (event.collidesWith(ev)) {
+        list.add(ev);
+      }
+    });
+
+    if (list.length > 0) {
+      int index = list.reversed.toList().indexOf(event);
+      width = (MediaQuery.of(context).size.width - 76) / (list.length);
+      left = 76 +
+          (index / (list.length) * (MediaQuery.of(context).size.width - 76));
+    } else {
+      width = MediaQuery.of(context).size.width - 76;
+      left = 76;
+    }
+
+    return {"left": left, "width": width};
+  }
+
+  Widget createWidget(Event event) => Positioned(
+        top: _generatePositionCard(event.initialDate),
+        left: calculateWidth(event, List.from(widget.events))['left'],
+        width: calculateWidth(event, List.from(widget.events))['width'],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 3.0, right: 3.0),
+          child: GestureDetector(
+            onTap: () {
+              if (event.onEventTap != null) {
+                event.onEventTap(event);
+              }
+            },
+            child: _cardEvent(event),
+          ),
+        ),
+      );
 
   Widget _cardEvent(Event ev, {double width}) {
     return Container(
-      width: width,
       decoration: BoxDecoration(
         color: ev.color,
         border: Border.all(

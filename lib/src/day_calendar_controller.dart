@@ -96,6 +96,8 @@ abstract class _DayCalendarControllerBase with Store {
       list.add(f);
     });
 
+    // list.sort((a, b) => a.initialDate.compareTo(b.initialDate));
+
     return list;
   }
 }
