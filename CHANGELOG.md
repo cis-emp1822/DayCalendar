@@ -30,3 +30,7 @@
 ## [1.0.8] - Add release date
 
 * changed the way events are rendered
+
+## [1.0.9] - Add release date
+
+* add parameter for set if can change page

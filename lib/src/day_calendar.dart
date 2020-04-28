@@ -35,10 +35,13 @@ class DayCalendarFlutter extends StatefulWidget {
   final OnDateChange onDateChange;
 
   ///bolean for show header or no
-  bool showHeader = true;
+  final bool showHeader;
 
   ///a custom header widget
   final Widget customHeader;
+
+  ///set if page can change
+  final bool changePage;
 
   DayCalendarFlutter({
     Key key,
@@ -52,6 +55,7 @@ class DayCalendarFlutter extends StatefulWidget {
     this.onDateChange,
     this.showHeader,
     this.customHeader,
+    this.changePage,
     @required this.events,
   }) : super(key: key);
   @override
@@ -79,8 +83,11 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
   Widget build(BuildContext context) {
     return Expanded(
       child: PageView.builder(
-        itemCount: DateUtil()
-            .daysInMonth(widget.currentDate.month, widget.currentDate.year),
+        itemCount: widget.changePage == null ||
+                (widget.changePage != null && widget.changePage)
+            ? DateUtil()
+                .daysInMonth(widget.currentDate.month, widget.currentDate.year)
+            : 1,
         controller: pageController,
         onPageChanged: (i) {
           setState(() {
@@ -121,7 +128,8 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                     ),
                   ),
                 ),
-                widget.showHeader != null && widget.showHeader
+                widget.showHeader == null ||
+                        (widget.showHeader != null && widget.showHeader)
                     ? widget.customHeader == null
                         ? buildHeader()
                         : SizedBox.shrink()
