@@ -34,3 +34,7 @@
 ## [1.0.9] - Add release date
 
 * add parameter for set if can change page
+
+## [1.1.0] - Add release date
+
+* add feature for all day events

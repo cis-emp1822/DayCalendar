@@ -53,7 +53,7 @@ class DayCalendarFlutter extends StatefulWidget {
     this.colorTimeLine,
     this.selectedColor,
     this.onDateChange,
-    this.showHeader,
+    this.showHeader = true,
     this.customHeader,
     this.changePage,
     @required this.events,
@@ -194,20 +194,28 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
         : SizedBox.shrink();
   }
 
-  double _generatePositionCard(DateTime date) {
+  double _generatePositionCard(DateTime date, {bool isAllDay = false}) {
     var index = controller.listHour.indexWhere(
       (t) => t['date'].hour == date.hour && t['date'].minute == date.minute,
     );
 
-    return double.parse(((index * 1.61) + 1).toString());
+    if (isAllDay) {
+      index = 0;
+    }
+
+    return double.parse(((index * 1.61) + 3).toString());
   }
 
-  double _generateHeightCard(DateTime date) {
+  double _generateHeightCard(DateTime date, {bool isAllDay = false}) {
     var index = controller.listHour.indexWhere(
       (t) => t['date'].hour == date.hour && t['date'].minute == date.minute,
     );
 
-    return double.parse(((index * 1.61) + 1).toString());
+    if (isAllDay) {
+      index = controller.listHour.length;
+    }
+
+    return double.parse(((index * 1.61) + 3).toString());
   }
 
   buildEvents() {
@@ -253,7 +261,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
   }
 
   Widget createWidget(Event event) => Positioned(
-        top: _generatePositionCard(event.initialDate),
+        top: _generatePositionCard(event.initialDate, isAllDay: event.allDay),
         left: calculateWidth(event, List.from(widget.events))['left'],
         width: calculateWidth(event, List.from(widget.events))['width'],
         child: Padding(
@@ -282,8 +290,8 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
           bottomLeft: Radius.circular(2),
         ),
       ),
-      height: _generateHeightCard(ev.finalDate) -
-          _generatePositionCard(ev.initialDate),
+      height: _generateHeightCard(ev.finalDate, isAllDay: ev.allDay) -
+          _generatePositionCard(ev.initialDate, isAllDay: ev.allDay),
       child: Text(
         "${ev.title} ${showHours(ev)}",
         style: ev.eventTitleStyle == null

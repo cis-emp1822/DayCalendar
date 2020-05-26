@@ -13,6 +13,7 @@ class Event {
   TextStyle eventTitleStyle;
   bool showHours;
   final OnEventTap onEventTap;
+  final bool allDay;
 
   Event(
       {this.initialDate,
@@ -23,7 +24,9 @@ class Event {
       this.borderColor,
       this.eventTitleStyle,
       this.showHours,
-      @required this.onEventTap});
+      this.allDay = false,
+      @required this.onEventTap,
+    });
 
   factory Event.fromJson(String str) => Event.fromMap(json.decode(str));
 
@@ -52,6 +55,7 @@ class Event {
             : json['eventTitleStyle'],
         showHours: json['showHours'] == null ? null : json['showHours'],
         onEventTap: json['eventTap'] == null ? null : json['eventTap'],
+        allDay: json["allDay"] == null ? null : json["allDay"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -66,5 +70,6 @@ class Event {
             : eventTitleStyle,
         "showHours": showHours == null ? null : showHours,
         "eventTap": onEventTap == null ? null : onEventTap,
+        "allDay": allDay == null ? null : allDay,
       };
 }

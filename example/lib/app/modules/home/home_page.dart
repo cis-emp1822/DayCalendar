@@ -19,20 +19,24 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       appBar: AppBar(
         title: Text("day_calendar_flutter"),
       ),
-      body: DayCalendarFlutter(
+      body: Column(
+        children: <Widget>[
+          DayCalendarFlutter(
         currentDate: DateTime.now(),
-        showHeader: false,
+        initialHour: 06,
+        finalHour: 22,
         events: [
           new Event(
             color: Colors.cyan,
-            initialDate: DateTime.now(),
-            finalDate: DateTime.now().add(Duration(hours: 1, minutes: 5)),
+            initialDate: DateTime(2020, 05, 26, 13, 00),
+            finalDate:  DateTime(2020, 05, 26, 13, 30),
             title: "Reunião",
             eventTitleStyle: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             showHours: true,
+            allDay: true,
             onEventTap: (event) {
               
             }
@@ -42,6 +46,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           print(DateFormat('HH:mm').format(date));
         },
       ),
+        ],
+      )
     );
   }
 }

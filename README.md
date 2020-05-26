@@ -2,9 +2,13 @@
 
 [![Pub Package](https://img.shields.io/pub/v/day_calendar_flutter.svg?style=flat-square)](https://pub.dartlang.org/packages/day_calendar_flutter)
 
-| ![github-small](assets/img/readme_1.png) | ![github-small](assets/img/readme_2.png) |
-| :------------: | :------------: |
+| ![github-small](assets/img/readme_1.png) |
+| :------------: |
  **Day calendar** with custom styles
+
+ | ![github-small](assets/img/readme_3.png) |
+ | :------------: |
+ **Day calendar** with all day feature
 
 ## Usage
 
@@ -18,7 +22,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  day_calendar_flutter: ^1.0.3
+  day_calendar_flutter: ^1.1.0
 
 flutter_localizations:
   sdk: flutter
@@ -51,28 +55,35 @@ import 'package:day_calendar_flutter/day_calendar_flutter.dart';
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DayCalendarFlutter(
-        currentDate: DateTime.now(),
-        events: [
-          new Event(
-            color: Colors.cyan,
-            initialDate: DateTime.now(),
-            finalDate: DateTime.now().add(Duration(minutes: 30)),
-            title: "Reunião",
-            eventTitleStyle: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-            showHours: true,
-            onEventTap: (ev) {
-              print(ev.title);
+      body: Column(
+        children: <Widget>[
+          DayCalendarFlutter(
+            currentDate: DateTime.now(),
+            initialHour: 06,
+            finalHour: 22,
+            events: [
+              new Event(
+                color: Colors.cyan,
+                initialDate: DateTime(2020, 05, 26, 13, 00),
+                finalDate:  DateTime(2020, 05, 26, 13, 30),
+                title: "Reunião",
+                eventTitleStyle: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+                showHours: true,
+                allDay: true,
+                onEventTap: (event) {
+                  print(event)
+                }
+              ),
+            ],
+            onTap: (date) {
+              print(DateFormat('HH:mm').format(date));
             },
           ),
-        ],
-        onTap: (date) {
-          print(DateFormat('HH:mm').format(date));
-        },
-      ),
+        ]
+      )
     );
   }
 ```
