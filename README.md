@@ -4,9 +4,7 @@
 
 | ![github-small](assets/img/readme_1.png) | ![github-small](assets/img/readme_3.png) |
 | :------------: | :------------: |
- **Day calendar** with custom styles
-|
- **Day calendar** with all day feature
+ **Day calendar** with custom styles | **Day calendar** with all day feature
 
 ## Usage
 
