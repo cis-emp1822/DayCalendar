@@ -3,8 +3,9 @@
 [![Pub Package](https://img.shields.io/pub/v/day_calendar_flutter.svg?style=flat-square)](https://pub.dartlang.org/packages/day_calendar_flutter)
 
 | ![github-small](assets/img/readme_1.png) | ![github-small](assets/img/readme_3.png) |
-| :------------: | :------------: |
+| :------------: |
  **Day calendar** with custom styles
+| :------------: |
  **Day calendar** with all day feature
 
 ## Usage
