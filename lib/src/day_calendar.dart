@@ -130,7 +130,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                 ),
                 widget.showHeader == null ||
                         (widget.showHeader != null && widget.showHeader)
-                    ? widget.customHeader == null
+                    ? widget.customHeader != null
                         ? buildHeader()
                         : SizedBox.shrink()
                     : SizedBox.shrink(),
