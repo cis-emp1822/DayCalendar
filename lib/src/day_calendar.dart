@@ -305,7 +305,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
 
   String showHours(Event ev) {
     if (ev.showHours != null && ev.showHours) {
-      return '${DateFormat('HH:mm').format(ev.initialDate)} - ${DateFormat('HH:mm').format(ev.finalDate)}';
+      return '${DateFormat('HH:mm a').format(ev.initialDate)} - ${DateFormat('HH:mm a').format(ev.finalDate)}';
     }
 
     return '';
