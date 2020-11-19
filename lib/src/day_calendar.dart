@@ -326,7 +326,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      DateFormat('HH:mm a').format(hour['date']),
+                      DateFormat('HH:mm').format(hour['date']),
                       style: TextStyle(
                           color: hour['selected']
                               ? widget.selectedColor == null
