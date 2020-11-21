@@ -305,7 +305,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
 
   String showHours(Event ev) {
     if (ev.showHours != null && ev.showHours) {
-      return '${DateFormat('HH:mm a').format(ev.initialDate)} - ${DateFormat('HH:mm a').format(ev.finalDate)}';
+      return '${DateFormat.jm().format(ev.initialDate)} - ${DateFormat.jm().format(ev.finalDate)}';
     }
 
     return '';
@@ -326,7 +326,7 @@ class _DayCalendarFlutterState extends State<DayCalendarFlutter> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      DateFormat('HH:mm a').format(hour['date']),
+                      DateFormat.jm().format(hour['date']),
                       style: TextStyle(
                           color: hour['selected']
                               ? widget.selectedColor == null
